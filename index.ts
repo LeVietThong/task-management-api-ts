@@ -9,6 +9,15 @@ database.connect();
 const app: Express = express();
 const port: number | string = process.env.PORT || 3000;
 
+app.get("/tasks", async (req: Request, res: Response) => {
+  const tasks = await Task.find({
+    deleted: false,
+  });
+
+
+  res.json(tasks);
+});
+
 app.get("/tasks/detail/:id", async (req: Request, res: Response) => {
   const id: string = req.params.id;
   const tasks = await Task.find({
