@@ -172,3 +172,29 @@ export const edit = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const deleteTask = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    
+    await Task.updateOne(
+      {
+        _id: id,
+      },
+      {
+        deleted: true,
+        deleteAt: new Date(),
+      }
+    );
+
+    res.json({
+      code: 200,
+      message: "Xoá task thành công",
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Không tìm thấy task này",
+    });
+  }
+};
